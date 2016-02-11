@@ -1,4 +1,5 @@
 #include <cstring>
+#include <cstdio>
 #include <map>
 #include <vector>
 
@@ -62,8 +63,6 @@ struct Drone {
   }
 
   void action(char t, int to, int count, int product) { 
-    // t = 0
-    // t 
     act.push_back(Action{t, to, count, product});
   }
 };
@@ -100,4 +99,5 @@ int main() {
     for (int j = 0; j < C; j++) {
     }
   }
+  for (int 
 }
