@@ -10,6 +10,10 @@ int DL, ML;
 int P, W;
 int C;
 
+template<class T, class V> long long dist(T a, V b) {
+  return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
+}
+
 struct Warehouse {
   int x, y;
   vector<int> cap;
@@ -49,14 +53,16 @@ struct Action {
 struct Drone {
   int x, y;
   int f;
+  int id;
   int t;
   map<int, int> l;
-  vector<Action> act;
+  vector<Action> acts;
 
   Drone() {
   }
 
-  Drone(const Warehouse &w) {
+  Drone(int i, const Warehouse &w) {
+    id = i;
     x = w.x;
     y = w.y;
     t = 0;
@@ -64,11 +70,14 @@ struct Drone {
   }
 
   void action(char t, int to, int count, int product) { 
-    act.push_back(Action(t, to, count, product));
+    acts.push_back(Action(t, to, count, product));
   }
   
   void print() {
-    for (auto x : 
+    for (size_t i = 0; i < acts.size(); i++) {
+      Action act = acts[i];
+      printf("%d %c %d %d %d\n", id, act.t, act.to, act.count, act.product);
+    }
   }
 };
 
@@ -88,6 +97,7 @@ int main() {
     scanf("%d", &weight[i]);
   }
   scanf("%d", &W);
+  wh = vector<Warehouse>(W);
   for (int i = 0; i < W; i++) {
     wh[i].read();
   }
@@ -97,11 +107,14 @@ int main() {
   }
   dr = vector<Drone>(D);
   for (int i = 0; i < D; i++) {
-    dr[i] = Drone(wh[0]);
+    dr[i] = Drone(i, wh[0]);
   }
-  vector<double, pair<int, int>> dist;
+  vector<pair<long long, pair<int, int>>> ord;
+  /*
   for (int i = 0; i < W; i++) {
     for (int j = 0; j < C; j++) {
+      ord.push_back(mp(dist(wh[i], cust[j])));
     }
   }
+  */
 }
