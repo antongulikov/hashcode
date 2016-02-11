@@ -241,6 +241,25 @@ void do_cust(int id) {
     }
 }
 
+long double func(int x) {
+    long double ret = 1e9;
+    auto & customer = cust[x];
+    int pos = 0;
+    for (int i = 0; i < wh.size(); i++) {
+        long double di = point_dist(customer.x, customer.y, wh[i].x, wh[i].y);
+        if (di < ret) {
+            ret = di;
+            pos = i;
+        }
+    }
+    return ret;
+}
+
+bool cmp(int x, int y)
+{
+    return func(x) < func(y);
+}
+
 
 int main() {
     scanf("%d%d", &X, &Y);
@@ -272,8 +291,7 @@ int main() {
     for (int i = 0; i < C; i++)
         order.push_back(i);
 
-    random_shuffle(order.begin(), order.end());
-
+    sort(order.begin(), order.end(), cmp);
 
     for (int i = 0; i < order.size(); i++)
         do_cust(order[i]);
