@@ -1,4 +1,5 @@
 #include <cstring>
+#include <map>
 #include <vector>
 
 using namespace std;
@@ -24,29 +25,30 @@ struct Warehouse {
 
 struct Customer {
   int x, y;
-  vector<int> l;
+  map<int, int> l;
   Customer() {}
   void read() {
     scanf("%d%d", &x, &y);
     int l_;
     scanf("%d", &l_);
-    l = vector<int>(l_);
     for (int i = 0; i < l_; i++) {
-      scanf("%d", &l[i]);
+      int x;
+      scanf("%d", &x);
+      l[x]++;
     }
   }
 };
 
 struct Action {
-  int t;
-  Action() {}
+  char t;
+  int to, count, product;
 };
 
 struct Drone {
   int x, y;
   int f;
   int t;
-  vector<int> l;
+  map<int, int> l;
   vector<Action> act;
 
   Drone() {
@@ -57,7 +59,12 @@ struct Drone {
     y = w.y;
     t = 0;
     f = 0;
-    l = vector<int>();
+  }
+
+  void action(char t, int to, int count, int product) { 
+    // t = 0
+    // t 
+    act.push_back(Action{t, to, count, product});
   }
 };
 
