@@ -1,3 +1,4 @@
+#include <cstring>
 #include <vector>
 
 using namespace std;
@@ -10,6 +11,7 @@ int C;
 struct Warehouse {
   int x, y;
   vector<int> cap;
+  Warehouse() {}
 
   void read() {
     scanf("%d%d", &x, &y);
@@ -23,6 +25,7 @@ struct Warehouse {
 struct Customer {
   int x, y;
   vector<int> l;
+  Customer() {}
   void read() {
     scanf("%d%d", &x, &y);
     int l_;
@@ -36,15 +39,20 @@ struct Customer {
 
 struct Action {
   int t;
-
+  Action() {}
 };
+
 struct Drone {
   int x, y;
   int f;
   int t;
   vector<int> l;
   vector<Action> act;
-  Drone(Warehouse w) {
+
+  Drone() {
+  }
+
+  Drone(const Warehouse &w) {
     x = w.x;
     y = w.y;
     t = 0;
@@ -76,7 +84,13 @@ int main() {
   for (int i = 0; i < C; i++) {
     cust[i].read();
   }
+  dr = vector<Drone>(D);
   for (int i = 0; i < D; i++) {
     dr[i] = Drone(wh[0]);
+  }
+  vector<double, pair<int, int>> dist;
+  for (int i = 0; i < W; i++) {
+    for (int j = 0; j < C; j++) {
+    }
   }
 }
