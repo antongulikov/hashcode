@@ -10,6 +10,10 @@ int DL, ML;
 int P, W;
 int C;
 
+template<class T, class V> long long dist(T a, V b) {
+  return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
+}
+
 struct Warehouse {
   int x, y;
   vector<int> cap;
@@ -93,6 +97,7 @@ int main() {
     scanf("%d", &weight[i]);
   }
   scanf("%d", &W);
+  wh = vector<Warehouse>(W);
   for (int i = 0; i < W; i++) {
     wh[i].read();
   }
@@ -104,9 +109,12 @@ int main() {
   for (int i = 0; i < D; i++) {
     dr[i] = Drone(i, wh[0]);
   }
-  vector<double, pair<int, int>> dist;
+  vector<pair<long long, pair<int, int>>> ord;
+  /*
   for (int i = 0; i < W; i++) {
     for (int j = 0; j < C; j++) {
+      ord.push_back(mp(dist(wh[i], cust[j])));
     }
   }
+  */
 }
