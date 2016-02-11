@@ -5,6 +5,7 @@
 #include <cmath>
 #include <algorithm>
 #include <iostream>
+#include <cassert>
 
 using namespace std;
 
@@ -87,6 +88,7 @@ vector<Drone> dr;
 int q;
 
 int main() {
+  freopen("sample.in", "r", stdin);
   cerr << "load data" << endl;
   scanf("%d%d", &X, &Y);
   scanf("%d", &D);
@@ -117,23 +119,30 @@ int main() {
 
   scanf("%d", &q);
   cerr << q << endl;
+  cerr << cust[1].l[0] << endl;
 
   for (int i = 0; i < q; i++) {
     int d;
     char c;
     scanf("%d %c", &d, &c);
+    assert(c == 'L' || c == 'U' || c == 'D');
 
-    if (c == 'L' || 'U') {
+    if (c == 'L' || c == 'U') {
       int nw, type, cnt;
       scanf("%d %d %d", &nw, &type, &cnt);
       int dist = dr[d].distToWh(wh[nw]);
       dr[d].t += dist + 1;
       if (c == 'L') {
-        dr[d].l[type] += cnt;
+        int a = dr[d].l[type];
+        
+        assert(type < P);
+        
+        dr[d].l[type] = a + cnt;
         dr[d].f += cnt * weight[type];
-        cerr << d << ' ' << type << ' ' << dr[d].l[type] << ' ' << cnt << endl;
+        
+        
         if (dr[d].f > ML) {
-          cout << "Drone " << d << " overflow!" << endl;
+          cout << "Drone " << d << " overflow! " << dr[d].f << endl;
           return 0;
         }
       }
@@ -144,16 +153,18 @@ int main() {
       scanf("%d %d %d", &cu, &type, &cnt);
       int dist = dr[d].distToCust(cust[cu]);
       dr[d].t += dist + 1;
+      dr[d].f -= cnt * weight[type];
       int a = cust[cu].l[type];
       cust[cu].l[type] = a - cnt;
-      if (cust[cu].l[type] < 0) {
-         cout << "Some extra items of type " << type << " in customer " << cu << endl;
-         cust[cu].l[type] = 0;
+      if (i == 8)
+        cerr << a - cnt << ' ' << a << ' ' << cnt << ' ' << type << ' ' << cu << endl;
+      if (a - cnt == 0) {
+        cust[cu].l.erase(type);
       }
-      /* */
+     
       if (cust[cu].l.empty()) {//customer is empty
-        cerr << "delivered all" << endl;
-        allscore += ceil((DL - dr[d].t) / DL * 100);
+        cerr << "delivered all customer " << cu << ", time " << dr[d].t << endl;
+        allscore += ceil((DL - dr[d].t) * 1.0 / DL * 100);
       }
     }
 
