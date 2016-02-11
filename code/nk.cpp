@@ -43,6 +43,7 @@ struct Customer {
 struct Action {
   char t;
   int to, count, product;
+  Action(char t, int to, int count, int product): t(t), to(to), count(count), product(product) {}
 };
 
 struct Drone {
@@ -63,7 +64,11 @@ struct Drone {
   }
 
   void action(char t, int to, int count, int product) { 
-    act.push_back(Action{t, to, count, product});
+    act.push_back(Action(t, to, count, product));
+  }
+  
+  void print() {
+    for (auto x : 
   }
 };
 
@@ -99,5 +104,4 @@ int main() {
     for (int j = 0; j < C; j++) {
     }
   }
-  for (int 
 }
